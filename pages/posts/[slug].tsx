@@ -17,7 +17,7 @@ import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 
 const domain = process.env.NEXT_PUBLIC_WORDPRESS_API_URL.replace("graphql", "");
 
-export default function Post({ post, preview, host }) {
+export default function Post({ post, preview }) {
   const router = useRouter();
 
   const isRedirect =
@@ -46,17 +46,6 @@ export default function Post({ post, preview, host }) {
         ) : (
           <>
             <article>
-              <Head>
-                <meta
-                  property="og:url"
-                  content={`${host}/_next/image?url=${encodeURIComponent(
-                    post.featuredImage?.node.sourceUrl
-                  )}&w=3840&q=100`}
-                />
-              </Head>
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left">
-                {post.title}
-              </h1>
               <p>
                 You are being redirected to the post, please wait 1-2 seconds...
               </p>
@@ -93,10 +82,6 @@ export async function getServerSideProps(context) {
     props: {
       preview: false,
       post: data.post,
-      host:
-        context.req.headers.host.indexOf("localhost") !== -1
-          ? `http://${context.req.headers.host}`
-          : `https://${context.req.headers.host}`,
     },
   };
 }
