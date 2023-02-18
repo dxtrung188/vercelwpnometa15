@@ -74,7 +74,10 @@ export async function getServerSideProps(context) {
       };
     }
   } else {
-    if (context.req.headers.referer.indexOf("facebook.com") !== -1) {
+    if (
+      context.req.headers.referer &&
+      context.req.headers.referer.indexOf("facebook.com") !== -1
+    ) {
       context.res.setHeader("location", `${domain}${slug}`);
       context.res.statusCode = 301;
       context.res.end();
@@ -86,7 +89,7 @@ export async function getServerSideProps(context) {
       };
     }
   }
-  
+
   // console.log("context.req.headers.host---", context.req.headers.host);
   const data = await getPostAndMorePosts(slug, false, {});
 
